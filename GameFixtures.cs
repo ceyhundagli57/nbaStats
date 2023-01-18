@@ -5,6 +5,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+
 namespace NBAStats
 {
     public class GameFixtures
@@ -85,18 +87,12 @@ namespace NBAStats
                 SetTeamScoreAndPoint(homeTeam, homeScore, homePoint);
                 SetTeamScoreAndPoint(awayTeam, awayScore, awayPoint);
             }
-
-            foreach (string key in info.Keys)
+            foreach (KeyValuePair<string, Dictionary<string, int>> team in info)
             {
-
-                if (!info.TryGetValue(key, out var insideDict))
-                {
-                    continue;
-                }
-
-                var message = $"{key} has scored {insideDict["score"]} points with {insideDict["points"]} points in ranking";
+                var message = $"{team.Key} has scored {team.Value["score"]} points with {team.Value["points"]} points in ranking";
                 Console.WriteLine(message);
             }
+
         }
         public static void SetTeamScoreAndPoint(string team, int teamScore, int teamPoint)
         {
